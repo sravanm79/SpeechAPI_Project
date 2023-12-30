@@ -3,6 +3,7 @@ from fairseq_asr import process_audio
 
 app = Flask(__name__)
 
+app = Flask(__name__, template_folder='../frontend/templates')
 
 @app.route('/')
 def index():
@@ -13,8 +14,8 @@ def index():
 def upload_file():
     uploaded_file = request.files['file']
 
-    # Process audio using Fairseq ASR
-    result = process_audio(uploaded_file)
+    #getrttmfromServer2
+    result = process_audio()
 
     return jsonify(result)
 
