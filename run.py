@@ -14,7 +14,7 @@ def run_server1():
     environment_name = 'fairseq'
     activate_command = f"conda activate {environment_name}  && python server1/app.py"
 
-    return subprocess.Popen(activate_command, shell=True, cwd="server1")
+    return subprocess.Popen(activate_command, cwd="server1")
 
 
 def run_server2():
@@ -22,12 +22,15 @@ def run_server2():
         raise "This App runs only on Ubuntu>20.4"
     environment_name = 'pynnote'
     activate_command = f"conda activate {environment_name} && python server2/app.py"
-    return subprocess.Popen(activate_command, shell=True, cwd="server2")
+    return subprocess.Popen(activate_command, cwd="server2")
 
 
 def print_server_info():
-    print("Server 1 is running on http://127.0.0.1:5000/")
-    print("Server 2 is running on http://127.0.0.1:8000/")
+    global server1_process, server2_process
+    print("Server 1 is running on http://127.0.0.1:5000/ (PID: {})".format(
+        server1_process.pid if server1_process else "Not Running"))
+    print("Server 2 is running on http://127.0.0.1:8000/ (PID: {})".format(
+        server2_process.pid if server2_process else "Not Running"))
 
 
 def stop_servers(signum, frame):
