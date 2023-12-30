@@ -21,8 +21,8 @@ def run_server2():
     if platform.system() != 'Linux':
         raise "This App runs only on Ubuntu>20.4"
     environment_name = 'pynnote'
-    activate_command = f"conda activate {environment_name} && python server2/app.py"
-    return subprocess.Popen(activate_command, shell=True, cwd="server2")
+    activate_command = f"conda init sh && conda activate {environment_name} && python server2/app.py"
+    return subprocess.Popen(activate_command, shell=True, executable="/bin/bash", cwd="server2")
 
 
 def print_server_info():
