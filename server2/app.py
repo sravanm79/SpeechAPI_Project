@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 from pynnote_diarization import diarize_speaker
 
 app = Flask(__name__)
@@ -13,8 +13,8 @@ def diarize_file():
         if not wav_path:
             raise ValueError("WAV path not provided")
 
-        rttm_result_path = diarize_speaker(wav_path)
-        return jsonify({"rttm_result_path": rttm_result_path})
+        rttm_data = diarize_speaker(wav_path)
+        return Response(rttm_data, mimetype='text/plain')
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
