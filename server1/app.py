@@ -6,7 +6,7 @@ import single_file_inference as infer
 from single_file_inference import Wav2VecCtc
 
 app = Flask(__name__, template_folder='../frontend/templates')  # Adjust the template folder path
-SERVER2_BASE_URL = "http://localhost:5000"  # Replace with the actual URL of your server2
+SERVER2_BASE_URL = "http://localhost:8002"  # Replace with the actual URL of your server2
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 
 
@@ -49,4 +49,4 @@ def diarize_on_server2(file_path):
 
 if __name__ == '__main__':
     infer.start_all(PROJECT_ROOT+"/languages")
-    app.run(debug=True, port=8001)
+    app.run(port=8001)
