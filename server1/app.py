@@ -5,6 +5,7 @@ from fairseq_asr import asr_result
 
 app = Flask(__name__, template_folder='../frontend/templates')  # Adjust the template folder path
 SERVER2_BASE_URL = "http://localhost:5000"  # Replace with the actual URL of your server2
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 
 
 @app.route('/')
@@ -16,13 +17,12 @@ def index():
 def upload_file():
     try:
         uploaded_file = request.files['file']
-        file_path = f"../uploads/{uploaded_file.filename}"
+        file_path = f"{PROJECT_ROOT}/uploads/{uploaded_file.filename}"
         uploaded_file.save(file_path)
 
         rttm_data = diarize_on_server2(file_path)
 
         # Perform Fairseq ASR on the chunks using the RTTM file
-
 
         return jsonify(rttm_data)
     except Exception as e:
@@ -35,8 +35,7 @@ def upload_file():
 def diarize_on_server2(file_path):
     try:
         diarization_url = f"{SERVER2_BASE_URL}/diarize"
-        abs_path = str(os.path.abspath(file_path))
-        data = {"wav_path": abs_path}
+        data = {"wav_path": file_path}
 
         response = requests.post(diarization_url, json=data)
         response.raise_for_status()
