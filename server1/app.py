@@ -2,6 +2,8 @@ import os
 import requests
 from flask import Flask, render_template, request, jsonify
 from fairseq_asr import asr_result
+import single_file_inference as infer
+from single_file_inference import Wav2VecCtc
 
 app = Flask(__name__, template_folder='../frontend/templates')  # Adjust the template folder path
 SERVER2_BASE_URL = "http://localhost:5000"  # Replace with the actual URL of your server2
@@ -23,8 +25,8 @@ def upload_file():
         rttm_data = diarize_on_server2(file_path)
 
         # Perform Fairseq ASR on the chunks using the RTTM file
-
-        return jsonify(rttm_data)
+        final_result = asr_result(file_path, rttm_data)
+        return jsonify(final_result)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     finally:
@@ -45,12 +47,6 @@ def diarize_on_server2(file_path):
         raise Exception(f"Failed to communicate with Server 2: {str(e)}")
 
 
-def merge_results(asr_result, diarization_result):
-    # Implement merging logic based on your requirements
-    # For example, combine speaker information from diarization with ASR transcriptions
-    merged_result = {"asr": asr_result, "diarization": diarization_result}
-    return merged_result
-
-
 if __name__ == '__main__':
+    infer.start_all(PROJECT_ROOT+"/languages")
     app.run(debug=True, port=8001)

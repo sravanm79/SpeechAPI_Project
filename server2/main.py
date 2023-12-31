@@ -4,7 +4,7 @@ import scipy.io.wavfile
 import numpy as np
 import subprocess
 
-from single_file_inference import get_results, start_all, parse_transcription, Wav2VecCtc
+from server1.single_file_inference import start_all, parse_transcription
 
 
 def split_audio_chunks(rttm_path, wav_path, output_dir="audio_chunks"):
