@@ -26,7 +26,7 @@ def upload_file():
         rttm_data = diarize_on_server2(file_path)
         final_result = asr_result(file_path, rttm_data)
         html_output = json_to_html(final_result)
-        return render_template('conversation.html', html_output=html_output)
+        return render_template('conversation.html', html_output=html_output, json_data=final_result)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     finally:
@@ -49,9 +49,8 @@ def diarize_on_server2(file_path):
 
 def json_to_html(json_data):
     try:
-        data = json.loads(json_data)
         html = "<div>"
-        for entry in data:
+        for entry in json_data:
             html += f"<p><span class='speaker'>{entry['speaker_id']}:</span> {entry['transcription']}</p>"
         html += "</div>"
         return html

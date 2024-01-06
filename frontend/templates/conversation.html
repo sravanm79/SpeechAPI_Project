@@ -13,5 +13,20 @@
 </head>
 <body>
 {{ html_output | safe }}
+<button onclick="downloadJson()">Download JSON</button>
+
+<script>
+    function downloadJson() {
+        var jsonData = {{ json_data | tojson | safe }};
+        var blob = new Blob([JSON.stringify(jsonData)], {type: 'application/json'});
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'conversation.json';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+</script>
+
 </body>
 </html>
