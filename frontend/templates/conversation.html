@@ -13,20 +13,26 @@
 </head>
 <body>
 {{ html_output | safe }}
-<button onclick="downloadJson()">Download JSON</button>
+<button onclick="downloadCsv()">Download CSV</button>
 
 <script>
-    function downloadJson() {
+    function downloadCsv() {
         var jsonData = {{ json_data | tojson | safe }};
-        var blob = new Blob([JSON.stringify(jsonData)], {type: 'application/json'});
+        var csvContent = "data:text/csv;charset=utf-8,";
+        csvContent += "speaker_id,transcription\n";
+        jsonData.forEach(function (entry) {
+            csvContent += `${entry.speaker_id},${entry.transcription}\n`;
+        });
+        var encodedUri = encodeURI(csvContent);
         var link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.download = 'conversation.json';
+        link.href = encodedUri;
+        link.download = 'conversation.csv';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
     }
 </script>
+
 
 </body>
 </html>
