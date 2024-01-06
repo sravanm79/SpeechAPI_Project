@@ -21,12 +21,10 @@ def upload_file():
         uploaded_file = request.files['file']
         file_path = f"{PROJECT_ROOT}/uploads/{uploaded_file.filename}"
         uploaded_file.save(file_path)
-
         rttm_data = diarize_on_server2(file_path)
-
-        # Perform Fairseq ASR on the chunks using the RTTM file
         final_result = asr_result(file_path, rttm_data)
-        return jsonify(final_result)
+        html_output = json_to_html(final_result)
+        return render_template('conversation.html', html_output=html_output)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     finally:
@@ -45,6 +43,18 @@ def diarize_on_server2(file_path):
         return rttm_data
     except requests.exceptions.RequestException as e:
         raise Exception(f"Failed to communicate with Server 2: {str(e)}")
+
+
+def json_to_html(json_data):
+    try:
+        data = json.loads(json_data)
+        html = "<div>"
+        for entry in data:
+            html += f"<p><span class='speaker'>{entry['speaker_id']}:</span> {entry['transcription']}</p>"
+        html += "</div>"
+        return html
+    except json.JSONDecodeError as e:
+        return f"Error decoding JSON: {e}"
 
 
 if __name__ == '__main__':
