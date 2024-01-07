@@ -49,10 +49,10 @@ def parse_rttm_data(rttm_data):
         end_times.append(start_times[-1] + float(parts[4]))
         spk_id.append(parts[7])
         # Round the time values to 3rd decimals $ask devash
-        start_times = np.array(start_times).round(decimals=3)
-        end_times = np.array(end_times).round(decimals=3)
+    start_times = np.array(start_times).round(decimals=3)
+    end_times = np.array(end_times).round(decimals=3)
 
-    return np.array(start_times), np.array(end_times), spk_id
+    return start_times, end_times, spk_id
 
 
 def getConversationFormatFromWav(wav_path, rttm_data):
