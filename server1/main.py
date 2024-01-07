@@ -107,8 +107,11 @@ def getConversationFormatFromWav(wav_path, rttm_data):
             "start_time": start_time,
             "end_time": end_time,
             "speaker_id": speaker_id,
+            "act_id": speaker_id,
             "transcription": transcription,
-            "language": "english"
+            "actual_transcript": transcription,
+            "language": "english",
+            "actual_language": "english"
         })
 
     # Remove temporary directory
