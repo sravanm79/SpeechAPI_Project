@@ -3,10 +3,12 @@ import shutil
 
 import numpy as np
 import scipy.io.wavfile
+from pydub import AudioSegment, effects
+from pydub.silence import split_on_silence
+
 from single_file_inference import start_all, parse_transcription
 
 base_path = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
-
 
 
 def split_audio_chunks(rttm_data, wav_path, output_dir="audio_chunks"):
@@ -46,6 +48,9 @@ def parse_rttm_data(rttm_data):
         start_times.append(float(parts[3]))
         end_times.append(start_times[-1] + float(parts[4]))
         spk_id.append(parts[7])
+        # Round the time values to 3rd decimals $ask devash
+        start_times = np.array(start_times).round(decimals=3)
+        end_times = np.array(end_times).round(decimals=3)
 
     return np.array(start_times), np.array(end_times), spk_id
 
@@ -66,7 +71,36 @@ def getConversationFormatFromWav(wav_path, rttm_data):
 
         # Load the segment WAV file
         segment_wav_path = os.path.join(temp_output_dir, f"{i + 1}_{speaker_id}.wav")
-        transcription = parse_transcription(segment_wav_path, "en")
+        audio_file = AudioSegment.from_file(segment_wav_path, format="wav")
+        audio_file = audio_file.set_channels(1)
+        audio_file = audio_file.set_frame_rate(16000)
+
+        # Normalizing the audio file
+        # import noisereduce
+        # audio_file=noisereduce.reduce_noise(np.array(audio_file.get_array_of_samples()),16000)
+        # from scipy.io import wavfile
+        # wavfile.write("temp.wav",rate=16000,data=audio_file)
+        # audio_file = AudioSegment.from_file("temp.wav",format="wav")
+        # os.remove("temp.wav")
+        audio_file = effects.normalize(audio_file)
+        # duration=get_duration(audio_file)
+
+        if os.path.exists("chunked"):
+            shutil.rmtree("chunked")
+
+        # Create temp folder chunked to store data
+        os.mkdir("chunked")
+        whole_transcript = ""
+        # Chunk the file and create small transcription of each chunk
+        audio_chunks = split_on_silence(audio_file, min_silence_len=800, silence_thresh=-40, keep_silence=500)
+        for i, chunk in enumerate(audio_chunks):
+            out_file = "chunked/chunk{}.wav".format(i)
+            chunk.export(out_file, format="wav")
+            wav_path = out_file
+            transcript = parse_transcription(wav_path=wav_path, lang='en')
+            whole_transcript += " " + transcript
+        shutil.rmtree("chunked")
+        transcription = whole_transcript
 
         # Organize the results in the conversation format
         conversation_format.append({
