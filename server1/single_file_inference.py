@@ -374,7 +374,7 @@ def parse_transcription(wav_path, lang="en"):
 
 def start_all(model_base_path):
     global model_dict
-    if model_dict != None:
+    if model_dict is not None:
         return 0
     model_dict = {}
     languages = os.listdir(model_base_path)

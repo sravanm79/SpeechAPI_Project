@@ -21,10 +21,11 @@ def index():
 def upload_file():
     try:
         uploaded_file = request.files['file']
+        language = "en"  # request.files['file']
         file_path = f"{PROJECT_ROOT}/uploads/{uploaded_file.filename}"
         uploaded_file.save(file_path)
         rttm_data = diarize_on_server2(file_path)
-        final_result = asr_result(file_path, rttm_data)
+        final_result, excel_file_path = asr_result(file_path, rttm_data, language)
         html_output = json_to_html(final_result)
         return render_template('conversation.html', html_output=html_output, json_data=final_result)
     except Exception as e:
@@ -59,5 +60,5 @@ def json_to_html(json_data):
 
 
 if __name__ == '__main__':
-    infer.start_all(PROJECT_ROOT+"/languages")
+    infer.start_all(PROJECT_ROOT + "/languages")
     app.run(port=8001)

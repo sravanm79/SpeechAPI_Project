@@ -10,26 +10,29 @@
             font-weight: bold;
         }
     </style>
+
+    <!-- Add these CDN links in the head section of your HTML file -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.5/xlsx.full.min.js"></script>
+    <script type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
 </head>
 <body>
 {{ html_output | safe }}
-<button onclick="downloadCsv()">Download CSV</button>
+<button onclick="downloadExcel()">Download Excel</button>
 
 <script>
-    function downloadCsv() {
+    function downloadExcel() {
         var jsonData = {{ json_data | tojson | safe }};
-        var csvContent = "data:text/csv;charset=utf-8,";
-        csvContent += "speaker_id,transcription\n";
-        jsonData.forEach(function (entry) {
-            csvContent += `${entry.speaker_id},${entry.transcription}\n`;
+        var ws = XLSX.utils.json_to_sheet(jsonData);
+        var wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+        var blob = XLSX.write(wb, {
+            bookType: 'xlsx',
+            type: 'blob',
+            mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
         });
-        var encodedUri = encodeURI(csvContent);
-        var link = document.createElement('a');
-        link.href = encodedUri;
-        link.download = 'conversation.csv';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
+        saveAs(blob, 'output.xlsx');
     }
 </script>
 

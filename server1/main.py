@@ -55,16 +55,18 @@ def parse_rttm_data(rttm_data):
     return start_times, end_times, spk_id
 
 
-def getConversationFormatFromWav(wav_path, rttm_data):
+def getConversationFormatFromWav(wav_path, rttm_data, language):
     temp_output_dir = "temp_output_dir"
     split_audio_chunks(rttm_data, wav_path, temp_output_dir)
 
     # Process the RTTM file and organize the results in a conversation format
     start_times, end_times, spk_id = parse_rttm_data(rttm_data)
-
+    end_max = end_times[0]
     conversation_format = []
 
     for i in range(len(start_times)):
+        act_id = {}
+        substring_list = ["morning", "urban", "company", "good", "evening", "afternoon", "calling"]
         start_time = start_times[i]
         end_time = end_times[i]
         speaker_id = spk_id[i]
@@ -90,17 +92,40 @@ def getConversationFormatFromWav(wav_path, rttm_data):
 
         # Create temp folder chunked to store data
         os.mkdir("chunked")
-        whole_transcript = ""
+        transcription = ""
         # Chunk the file and create small transcription of each chunk
         audio_chunks = split_on_silence(audio_file, min_silence_len=800, silence_thresh=-40, keep_silence=500)
-        for i, chunk in enumerate(audio_chunks):
-            out_file = "chunked/chunk{}.wav".format(i)
-            chunk.export(out_file, format="wav")
+        for chunkIndex, subChunk in enumerate(audio_chunks):
+            out_file = "chunked/chunk{}.wav".format(chunkIndex)
+            subChunk.export(out_file, format="wav")
             wav_path = out_file
             transcript = parse_transcription(wav_path=wav_path, lang='en')
-            whole_transcript += " " + transcript
+            transcription += " " + transcript
         shutil.rmtree("chunked")
-        transcription = whole_transcript
+        if act_id == {} and any(substring in transcription for substring in substring_list):
+            if str(spk_id[i]) == "00":
+                act_id["00"] = "Agent"
+                act_id["0"] = "Agent"
+                act_id["01"] = "Customer"
+                act_id["1"] = "Customer"
+            elif str(spk_id[i]) == "01":
+                act_id["01"] = "Agent"
+                act_id["1"] = "Agent"
+                act_id["00"] = "Customer"
+                act_id["0"] = "Customer"
+        if start_times[i] - end_max > 0:
+            if start_times[i] - end_max > 0.25:
+                start_time = str(end_max)
+                end_time = str(start_times[i])
+                speaker_id = " "
+                transcription = "Silence"
+        if end_times[i] - start_times[i] > 0.25 or transcription != " ":
+            start_time = str(start_times[i])
+            end_time = str(end_times[i])
+            speaker_id = str(spk_id[i])
+            transcription = transcription
+        if end_times[i] > end_max:
+            end_max = end_times[i]
 
         # Organize the results in the conversation format
         conversation_format.append({
@@ -110,11 +135,11 @@ def getConversationFormatFromWav(wav_path, rttm_data):
             "act_id": speaker_id,
             "transcription": transcription,
             "actual_transcript": transcription,
-            "language": "english",
+            "language": language,
             "actual_language": "english"
         })
 
     # Remove temporary directory
     shutil.rmtree(temp_output_dir)
 
-    return conversation_format
+    return conversation_format, act_id
