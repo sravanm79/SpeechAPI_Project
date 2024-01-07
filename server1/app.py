@@ -1,7 +1,7 @@
 import json
 import os
 import requests
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_file
 from fairseq_asr import asr_result
 import single_file_inference as infer
 
@@ -26,13 +26,20 @@ def upload_file():
         uploaded_file.save(file_path)
         rttm_data = diarize_on_server2(file_path)
         final_result, excel_file_path = asr_result(file_path, rttm_data, language)
-        html_output = json_to_html(final_result)
-        return render_template('conversation.html', html_output=html_output, json_data=final_result)
+        html_output = final_result.to_html()
+        # html_output = json_to_html(final_result)
+        return render_template('conversation.html', html_output=html_output, json_data=excel_file_path)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
     finally:
         # Clean up: remove the uploaded file
         os.remove(file_path)
+
+
+@app.route('/download_excel', methods=['GET'])
+def download_excel():
+    file_path = request.args.get('json_data', type=str)
+    return send_file(file_path, as_attachment=True)
 
 
 def diarize_on_server2(file_path):
@@ -61,4 +68,4 @@ def json_to_html(json_data):
 
 if __name__ == '__main__':
     infer.start_all(PROJECT_ROOT + "/languages")
-    app.run(port=8001)
+    app.run(debug=True, port=8001)
