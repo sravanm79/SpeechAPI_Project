@@ -38,7 +38,7 @@ def upload_file():
 
 @app.route('/download_excel', methods=['GET'])
 def download_excel():
-    file_path = request.args.get('json_data', type=str)
+    file_path = request.args.get('file_path', type=str)
     return send_file(file_path, as_attachment=True)
 
 
