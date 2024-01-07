@@ -47,7 +47,7 @@ def parse_rttm_data(rttm_data):
             break
         start_times.append(float(parts[3]))
         end_times.append(start_times[-1] + float(parts[4]))
-        spk_id.append(parts[7])
+        spk_id.append(parts[7][-2:])
         # Round the time values to 3rd decimals $ask devash
     start_times = np.array(start_times).round(decimals=3)
     end_times = np.array(end_times).round(decimals=3)
