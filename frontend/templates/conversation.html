@@ -28,9 +28,8 @@
         var getUrl = `/download_excel?file_path=${encodeURIComponent(jsonData)}`;
         fetch(getUrl)
             .then(data => {
-                var blob = new Blob([data]);
                 var link = document.createElement('a');
-                link.href = window.URL.createObjectURL(blob);
+                link.href = data.url
                 link.download = 'call.xlsx';
                 document.body.appendChild(link);
                 link.click();
