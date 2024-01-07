@@ -15,5 +15,7 @@ def asr_result(wav_path, rttm_data, language):
     if act_dict != {}:
         df["speaker_id"] = df["speaker_id"].replace(act_dict)
     excel_file_path = os.path.join(wav_directory, "conversation_data.xlsx")
+    if os.path.exists(excel_file_path):
+        os.remove(excel_file_path)
     df.to_excel(excel_file_path, index=False)
     return df, excel_file_path

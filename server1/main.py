@@ -63,10 +63,10 @@ def getConversationFormatFromWav(wav_path, rttm_data, language):
     start_times, end_times, spk_id = parse_rttm_data(rttm_data)
     end_max = end_times[0]
     conversation_format = []
+    substring_list = ["morning", "urban", "company", "good", "evening", "afternoon", "calling"]
 
+    act_id = {}
     for i in range(len(start_times)):
-        act_id = {}
-        substring_list = ["morning", "urban", "company", "good", "evening", "afternoon", "calling"]
         start_time = start_times[i]
         end_time = end_times[i]
         speaker_id = spk_id[i]
