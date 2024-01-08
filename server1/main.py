@@ -56,6 +56,7 @@ def parse_rttm_data(rttm_data):
 
 
 def getConversationFormatFromWav(wav_path, rttm_data, language):
+    act_id = {}
     temp_output_dir = "temp_output_dir"
     split_audio_chunks(rttm_data, wav_path, temp_output_dir)
 
@@ -64,44 +65,19 @@ def getConversationFormatFromWav(wav_path, rttm_data, language):
     end_max = end_times[0]
     conversation_format = []
     substring_list = ["morning", "urban", "company", "good", "evening", "afternoon", "calling"]
-
-    act_id = {}
+    # if start_times[0] > 1:
+    #     start_time = str(0)
+    #     end_time = str(start_times[0])
+    #     speaker_id = " "
+    #     transcription = "Silence"
     for i in range(len(start_times)):
         start_time = start_times[i]
         end_time = end_times[i]
         speaker_id = spk_id[i]
-
         # Load the segment WAV file
         segment_wav_path = os.path.join(temp_output_dir, f"{i + 1}_{speaker_id}.wav")
-        audio_file = AudioSegment.from_file(segment_wav_path, format="wav")
-        audio_file = audio_file.set_channels(1)
-        audio_file = audio_file.set_frame_rate(16000)
-
-        # Normalizing the audio file
-        # import noisereduce
-        # audio_file=noisereduce.reduce_noise(np.array(audio_file.get_array_of_samples()),16000)
-        # from scipy.io import wavfile
-        # wavfile.write("temp.wav",rate=16000,data=audio_file)
-        # audio_file = AudioSegment.from_file("temp.wav",format="wav")
-        # os.remove("temp.wav")
-        audio_file = effects.normalize(audio_file)
-        # duration=get_duration(audio_file)
-
-        if os.path.exists("chunked"):
-            shutil.rmtree("chunked")
-
-        # Create temp folder chunked to store data
-        os.mkdir("chunked")
-        transcription = ""
-        # Chunk the file and create small transcription of each chunk
-        audio_chunks = split_on_silence(audio_file, min_silence_len=800, silence_thresh=-40, keep_silence=500)
-        for chunkIndex, subChunk in enumerate(audio_chunks):
-            out_file = "chunked/chunk{}.wav".format(chunkIndex)
-            subChunk.export(out_file, format="wav")
-            wav_path = out_file
-            transcript = parse_transcription(wav_path=wav_path, lang='en')
-            transcription += " " + transcript
-        shutil.rmtree("chunked")
+        transcription = predict_transcription(segment_wav_path)
+        print(transcription)
         if act_id == {} and any(substring in transcription for substring in substring_list):
             if str(spk_id[i]) == "00":
                 act_id["00"] = "Agent"
@@ -143,3 +119,33 @@ def getConversationFormatFromWav(wav_path, rttm_data, language):
     shutil.rmtree(temp_output_dir)
 
     return conversation_format, act_id
+
+
+def predict_transcription(segment_wav_path):
+    audio_file = AudioSegment.from_file(segment_wav_path, format="wav")
+    audio_file = audio_file.set_channels(1)
+    audio_file = audio_file.set_frame_rate(16000)
+    # Normalizing the audio file
+    # import noisereduce
+    # audio_file=noisereduce.reduce_noise(np.array(audio_file.get_array_of_samples()),16000)
+    # from scipy.io import wavfile
+    # wavfile.write("temp.wav",rate=16000,data=audio_file)
+    # audio_file = AudioSegment.from_file("temp.wav",format="wav")
+    # os.remove("temp.wav")
+    audio_file = effects.normalize(audio_file)
+    # duration=get_duration(audio_file)
+    if os.path.exists("chunked"):
+        shutil.rmtree("chunked")
+    # Create temp folder chunked to store data
+    os.mkdir("chunked")
+    transcription = ""
+    # Chunk the file and create small transcription of each chunk
+    audio_chunks = split_on_silence(audio_file, min_silence_len=800, silence_thresh=-40, keep_silence=500)
+    for chunkIndex, subChunk in enumerate(audio_chunks):
+        out_file = "chunked/chunk{}.wav".format(chunkIndex)
+        subChunk.export(out_file, format="wav")
+        wav_path = out_file
+        transcript = parse_transcription(wav_path=wav_path, lang='en')
+        transcription += " " + transcript
+    shutil.rmtree("chunked")
+    return transcription
