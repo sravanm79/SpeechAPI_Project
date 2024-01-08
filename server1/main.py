@@ -89,12 +89,6 @@ def getConversationFormatFromWav(wav_path, rttm_data, language):
                 act_id["1"] = "Agent"
                 act_id["00"] = "Customer"
                 act_id["0"] = "Customer"
-        if start_times[i] - end_max > 0:
-            if start_times[i] - end_max > 0.25:
-                start_time = str(end_max)
-                end_time = str(start_times[i])
-                speaker_id = " "
-                transcription = "Silence"
         if end_times[i] - start_times[i] > 0.25 or transcription != " ":
             start_time = str(start_times[i])
             end_time = str(end_times[i])
