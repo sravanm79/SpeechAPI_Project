@@ -4,13 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ASR Diarization App</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom Styles -->
+    <style>
+        /* Custom styles */
+        body {
+            background-color: #f8f9fa; /* Bootstrap light grey background */
+            padding: 20px;
+        }
+
+        h1 {
+            color: #007bff; /* Bootstrap primary blue color */
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    </style>
 </head>
 <body>
-    <h1>ASR Diarization App</h1>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="file" accept=".wav" required>
-        <button type="submit">Upload</button>
-    </form>
+    <div class="container">
+        <h1>ASR Diarization App</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="file">Select a .wav file:</label>
+                                <input type="file" class="form-control-file" id="file" name="file" accept=".wav" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary" id="uploadButton">Upload</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get the upload form and upload button
+        const uploadForm = document.getElementById('uploadForm');
+        const uploadButton = document.getElementById('uploadButton');
+
+        // Add an event listener to the upload button
+        uploadButton.addEventListener('click', function() {
+            // Trigger the form submission
+            uploadForm.submit();
+
+            // Redirect to http://127.0.0.1:5001/process
+            window.location.href = 'http://192.168.30.186:5001/process';
+        });
+    </script>
 </body>
+
 </html>
+
+
+

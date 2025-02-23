@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Response</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <h1 class="text-center text-primary">Upload Response</h1>
+        <div class="card mx-auto" style="max-width: 600px;">
+            <div class="card-body">
+                <p class="card-text"><b>{{ message }}</b></p>
+                <p><b>Calculated Time:</b> {{ calculated_time }}</p>
+                <p><b>File Type: </b>{{ file_type }}</p>
+                <p><b>Audio File Length: </b>{{ duration_seconds }}</p>
+                
+                <!-- Anchor styled as a button -->
+                <a href="http://27.111.72.61:5000/result" class="btn btn-success">View Output</a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+

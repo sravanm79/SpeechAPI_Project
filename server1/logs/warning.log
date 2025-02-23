@@ -1,0 +1,47 @@
+2025-02-15 00:52:12 - app.py_WARNING - WARNING - Could not detect format with audioread: 'FFmpegAudioFile' object has no attribute 'format'
+2025-02-15 00:56:06 - app.py_WARNING - WARNING - Could not detect format with audioread: 'FFmpegAudioFile' object has no attribute 'format'
+2025-02-16 00:21:43 - app.py_WARNING - WARNING - Overwriting existing JSON file: /media/vocab/DATA/sravan/NewSpeechAPI[Modified]/uploads/d684-66d78c59-vcall-521033&fileId=123&errorHandle=true&mediaType=AUDIO.json
+2025-02-16 01:50:11 - app.py_WARNING - WARNING - No file or audio URL provided.
+2025-02-17 19:52:35 - app.py_WARNING - WARNING - Overwriting existing JSON file: /media/vocab/DATA/sravan/Testing_SpeechAPI/uploads/d684-66d78c59-vcall-521033&fileId=123&errorHandle=true&mediaType=AUDIO.json
+2025-02-17 20:08:22 - app.py_WARNING - WARNING - No file or audio URL provided.
+2025-02-17 20:11:31 - app.py_WARNING - WARNING - Overwriting existing JSON file: /media/vocab/DATA/sravan/Testing_SpeechAPI/uploads/d684-66d78c59-vcall-521033&fileId=123&errorHandle=true&mediaType=AUDIO.json
+2025-02-17 20:34:45 - app.py_WARNING - WARNING - Overwriting existing JSON file: /media/vocab/DATA/sravan/Testing_SpeechAPI/uploads/d684-66d78c59-vcall-521033&fileId=123&errorHandle=true&mediaType=AUDIO.json
+2025-02-17 20:37:18 - app.py_WARNING - WARNING - Overwriting existing JSON file: /media/vocab/DATA/sravan/Testing_SpeechAPI/uploads/d684-66d78c59-vcall-521033&fileId=123&errorHandle=true&mediaType=AUDIO.json
+2025-02-17 20:39:54 - app.py_WARNING - WARNING - Overwriting existing JSON file: /media/vocab/DATA/sravan/Testing_SpeechAPI/uploads/d684-66d78c59-vcall-521033&fileId=123&errorHandle=true&mediaType=AUDIO.json
+2025-02-17 21:00:45 - app.py_WARNING - WARNING - Overwriting existing JSON file: /media/vocab/DATA/sravan/Testing_SpeechAPI/uploads/d684-66d78c59-vcall-521033&fileId=123&errorHandle=true&mediaType=AUDIO.json
+2025-02-18 00:29:51 - app.py_WARNING - WARNING - Overwriting existing JSON file: /media/vocab/DATA/sravan/Testing_SpeechAPI/uploads/d684-66d78c59-vcall-521033&fileId=123&errorHandle=true&mediaType=AUDIO.json
+2025-02-18 00:33:00 - app.py_WARNING - WARNING - Overwriting existing JSON file: /media/vocab/DATA/sravan/Testing_SpeechAPI/uploads/d684-66d78c59-vcall-521033&fileId=123&errorHandle=true&mediaType=AUDIO.json
+2025-02-18 00:38:43 - app.py_WARNING - WARNING - Could not detect format with audioread: 'FFmpegAudioFile' object has no attribute 'format'
+2025-02-18 10:07:18 - app.py_WARNING - WARNING - Overwriting existing JSON file: /media/vocab/DATA/sravan/Testing_SpeechAPI/uploads/d684-66d78c59-vcall-521033&fileId=123&errorHandle=true&mediaType=AUDIO.json
+2025-02-18 23:27:08 - app.py_WARNING - WARNING - Could not detect format with audioread: 'FFmpegAudioFile' object has no attribute 'format'
+2025-02-18 23:28:47 - app.py_WARNING - WARNING - Could not detect format with audioread: 'FFmpegAudioFile' object has no attribute 'format'
+2025-02-18 23:28:53 - app.py_WARNING - WARNING - Overwriting existing JSON file: /media/vocab/DATA/sravan/Testing_SpeechAPI/uploads/audio_2772595d3d53e3c3f243dd7e64c389de.json
+2025-02-19 12:12:02 - app.py_WARNING - WARNING - No file or audio URL provided.
+2025-02-19 20:03:16 - app.py_WARNING - WARNING - No file or audio URL provided.
+2025-02-21 09:06:41 - app.py_WARNING - WARNING - No file or audio URL provided.
+2025-02-21 21:43:11 - app.py_WARNING - WARNING - Could not detect format with audioread: 'FFmpegAudioFile' object has no attribute 'format'
+2025-02-21 22:15:38 - functions.py_WARNING - WARNING - Could not detect format with audioread: 'FFmpegAudioFile' object has no attribute 'format'
+2025-02-21 22:18:03 - app.py_WARNING - WARNING - Could not detect format with audioread: 'FFmpegAudioFile' object has no attribute 'format'
+2025-02-21 22:18:09 - app.py_WARNING - WARNING - Overwriting existing JSON file: /media/vocab/DATA/sravan/Testing_SpeechAPI/uploads/audio_2772595d3d53e3c3f243dd7e64c389de.json
+2025-02-23 15:17:26 - functions.py_WARNING - WARNING - Could not detect format with audioread: 'FFmpegAudioFile' object has no attribute 'format'
+2025-02-23 15:49:03 - functions.py_WARNING - WARNING - Could not detect format with audioread: 'FFmpegAudioFile' object has no attribute 'format'
+2025-02-23 15:49:09 - app.py_WARNING - WARNING - Overwriting existing JSON file: /media/vocab/DATA/sravan/Testing_SpeechAPI/uploads/audio_2772595d3d53e3c3f243dd7e64c389de.json
+2025-02-23 15:55:33 - functions.py_WARNING - WARNING - Could not detect format with audioread: 'FFmpegAudioFile' object has no attribute 'format'
+2025-02-23 15:55:39 - app.py_WARNING - WARNING - Overwriting existing JSON file: /media/vocab/DATA/sravan/Testing_SpeechAPI/uploads/audio_2772595d3d53e3c3f243dd7e64c389de.json
+2025-02-23 15:56:58 - functions.py_WARNING - WARNING - Could not detect format with audioread: 'FFmpegAudioFile' object has no attribute 'format'
+2025-02-23 16:03:58 - functions.py_WARNING - WARNING - Could not detect format with audioread: 'FFmpegAudioFile' object has no attribute 'format'
+2025-02-23 16:04:04 - app.py_WARNING - WARNING - Overwriting existing JSON file: /media/vocab/DATA/sravan/Testing_SpeechAPI/uploads/audio_2772595d3d53e3c3f243dd7e64c389de.json
+2025-02-23 16:11:33 - functions.py_WARNING - WARNING - Could not detect format with audioread: 'FFmpegAudioFile' object has no attribute 'format'
+2025-02-23 16:11:39 - app.py_WARNING - WARNING - Overwriting existing JSON file: /media/vocab/DATA/sravan/Testing_SpeechAPI/uploads/audio_2772595d3d53e3c3f243dd7e64c389de.json
+2025-02-23 16:21:31 - functions.py_WARNING - WARNING - Could not detect format with audioread: 'FFmpegAudioFile' object has no attribute 'format'
+2025-02-23 16:21:37 - app.py_WARNING - WARNING - Overwriting existing JSON file: /media/vocab/DATA/sravan/Testing_SpeechAPI/uploads/audio_2772595d3d53e3c3f243dd7e64c389de.json
+2025-02-23 16:36:06 - old_app.py_WARNING - WARNING - Could not detect format with audioread: 'FFmpegAudioFile' object has no attribute 'format'
+2025-02-23 16:36:12 - old_app.py_WARNING - WARNING - Overwriting existing JSON file: /media/vocab/DATA/sravan/Testing_SpeechAPI/uploads/audio_2772595d3d53e3c3f243dd7e64c389de.json
+2025-02-23 16:37:31 - old_app.py_WARNING - WARNING - Could not detect format with audioread: 'FFmpegAudioFile' object has no attribute 'format'
+2025-02-23 16:37:35 - old_app.py_WARNING - WARNING - Overwriting existing JSON file: /media/vocab/DATA/sravan/Testing_SpeechAPI/uploads/audio_2772595d3d53e3c3f243dd7e64c389de.json
+2025-02-23 16:39:57 - functions.py_WARNING - WARNING - Could not detect format with audioread: 'FFmpegAudioFile' object has no attribute 'format'
+2025-02-23 16:40:03 - app.py_WARNING - WARNING - Overwriting existing JSON file: /media/vocab/DATA/sravan/Testing_SpeechAPI/uploads/audio_2772595d3d53e3c3f243dd7e64c389de.json
+2025-02-23 16:43:28 - app.py_WARNING - WARNING - No file or audio URL provided.
+2025-02-23 16:43:52 - functions.py_WARNING - WARNING - Could not detect format with audioread: 'FFmpegAudioFile' object has no attribute 'format'
+2025-02-23 16:43:58 - app.py_WARNING - WARNING - Overwriting existing JSON file: /media/vocab/DATA/sravan/Testing_SpeechAPI/uploads/audio_2772595d3d53e3c3f243dd7e64c389de.json
+2025-02-23 22:58:55 - functions.py_WARNING - WARNING - Could not detect format with audioread: 'FFmpegAudioFile' object has no attribute 'format'

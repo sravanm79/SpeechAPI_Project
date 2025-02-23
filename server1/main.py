@@ -76,8 +76,14 @@ def getConversationFormatFromWav(wav_path, rttm_data, language):
         speaker_id = spk_id[i]
         # Load the segment WAV file
         segment_wav_path = os.path.join(temp_output_dir, f"{i + 1}_{speaker_id}.wav")
-        transcription = predict_transcription(segment_wav_path)
-        print(transcription)
+        try:
+            transcription, conf_score = predict_transcription(segment_wav_path)
+        except:
+            transcription = "entry"
+            conf_score = 1.3
+            pass
+        #print(transcription)
+
         if act_id == {} and any(substring in transcription for substring in substring_list):
             if str(spk_id[i]) == "00":
                 act_id["00"] = "Agent"
@@ -106,7 +112,8 @@ def getConversationFormatFromWav(wav_path, rttm_data, language):
             "transcription": transcription,
             "actual_transcript": transcription,
             "language": language,
-            "actual_language": "english"
+            "actual_language": "english",
+            "transcription_confidence_score":conf_score
         })
 
     # Remove temporary directory
@@ -139,7 +146,9 @@ def predict_transcription(segment_wav_path):
         out_file = "chunked/chunk{}.wav".format(chunkIndex)
         subChunk.export(out_file, format="wav")
         wav_path = out_file
-        transcript = parse_transcription(wav_path=wav_path, lang='en')
+        transcript,conf_score = parse_transcription(wav_path=wav_path, lang='en')
         transcription += " " + transcript
+        
     shutil.rmtree("chunked")
-    return transcription
+    return transcription,conf_score
+

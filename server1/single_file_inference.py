@@ -320,10 +320,20 @@ def get_results(wav_path, dict_path, generator, use_cuda=False, w2v_path=None, m
 
     with torch.no_grad():
         hypo = generator.generate(model, sample, prefix_tokens=None)
+        #print(hypo)
+        scores = [hypo[0][i]["score"] for i in range(len(hypo[0]))]
+        #print(scores)
+        probabilities = np.exp(scores - np.max(scores))
+        probabilities /= np.sum(probabilities)
+        confidence_score = probabilities[0]
+        # print(confidence_score)
     hyp_pieces = target_dict.string(hypo[0][0]["tokens"].int().cpu())
     text = post_process(hyp_pieces, 'letter')
+    #print(text)
+    # print(confidence_score)
+    # print(text)
 
-    return text
+    return text, confidence_score
 
 
 def load_model(model_path):
@@ -340,7 +350,7 @@ def get_args(lexicon_path, lm_path, BEAM=128, LM_WEIGHT=2, WORD_SCORE=-1):
     args['word_score'] = WORD_SCORE
     args['unk_weight'] = -np.inf
     args['sil_weight'] = 0
-    args['nbest'] = 1
+    args['nbest'] = 5
     args['criterion'] = 'ctc'
     args['labels'] = 'ltr'
     return args
@@ -357,7 +367,7 @@ def parse_transcription(wav_path, lang="en"):
     generator = cur_dict["generator"]
     target_dict = cur_dict["target_dict"]
     dict_path = "sad"
-    cuda = False
+    cuda = True
     if cuda:
         model.cuda()
     half = False
@@ -366,10 +376,11 @@ def parse_transcription(wav_path, lang="en"):
     # if half:
     #     model.half()
     # print((model.parameters()).is_cuda)
-    result = get_results(wav_path=wav_path, dict_path=dict_path, generator=generator, use_cuda=cuda, model=model,
+    result, conf_score = get_results(wav_path=wav_path, dict_path=dict_path, generator=generator, use_cuda=cuda, model=model,
                          half=half)
+    # print(conf_score)
 
-    return result
+    return result,conf_score
 
 
 def start_all(model_base_path):
